@@ -80,7 +80,7 @@ public class ScoreManager : MonoBehaviour
             , memberTimeColor = "#" + ColorUtility.ToHtmlStringRGBA(goodBadBestGradient.Evaluate(Mathf.Clamp01(1.0f - memberTime) / 2.0f + Mathf.Clamp01((pickUpGroup.maxPickUpScore - memberTime) / (pickUpGroup.maxPickUpScore - 1)) / 2.0f))
             , globalHighScoreColor = "#" + ColorUtility.ToHtmlStringRGBA(goodBadBestGradient.Evaluate(Mathf.Clamp01((globalHighScore - startScore) / (pickUpGroup.maxPickUpScore - startScore)) / 2.0f + Mathf.Clamp01((globalHighScore - pickUpGroup.maxPickUpScore) / (pickUpGroup.maxPickUpScore)) / 2.0f));
         //Debug.Log("globalHighScoreColor =" + globalHighScoreColor);
-        Debug.Log((memberHighScore - startScore) / (globalHighScore - startScore));
+        //Debug.Log((memberHighScore - startScore) / (globalHighScore - startScore));
         GetComponent<Text>().text = "<b>Member #:</b> " + (playerController.activePopIndex >= 0 ? playerController.population[playerController.activePopIndex].memberNum.ToString() : "N/A")
             + "\n<b>Member Name:</b> " + (playerController.activePopIndex >= 0 ? (playerController.population[activePopIndex].name + (playerController.population[activePopIndex].nameGen > 1 ? " " + NameBank.GetRomanNumeral(playerController.population[activePopIndex].nameGen) : "")) : "N/A")
             + "\n<b>Score:</b><color=" + scoreColor + "> " + totalScore.ToString() + "</color>"

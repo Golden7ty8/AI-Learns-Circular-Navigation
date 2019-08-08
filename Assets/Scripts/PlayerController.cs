@@ -26,7 +26,11 @@ public class PlayerController : MonoBehaviour
 
     }*/
 
-
+    public struct Bloodline
+    {
+        public string name;
+        public int count;
+    }
 
     [System.Serializable]
     public struct DNA
