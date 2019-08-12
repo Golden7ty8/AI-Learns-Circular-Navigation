@@ -7,6 +7,8 @@ public class NameBank : MonoBehaviour
 
     //static int namesUsedCount = 0;
     static string[] names = {
+        "Alastair", "Bronte", "Jason Chipp", "Evan", "Soka", "Cotter", "Gabriel", "Amber", "Blaze",
+		"MatPat", "Stephanie", "Chris", "Jason",
         "Bob", "Ms. Applegate",
         "Reg", "Riko", "Nanachi", "Ozen", "Lyza",
         "Ainz", "Albeto", "Shal Tier", "Aura", "Marey", "Cokitus", "Demiurge", "Sebis", "Gasef", "Brain", "Envy", "Enry",
@@ -16,7 +18,12 @@ public class NameBank : MonoBehaviour
         "Edward", "Alfonse", "Hoenheim",
         "Eragon", "Saphira", "Roran", "Naswada", "Arya",
         "Harry", "Ron", "Hermionie", "Albus", "Minerva", "Filch", "Snape", "Qwirl", "Gilderoy", "Loopin", "Sprout", "Moody", "Umbridge", "Slughorn", "Hagrid", "Vernin", "Petunia", "Dugley", "Wood", "Flitwick", "Serious", "Peter", "Tom", "Jinny", "George", "Fred", "Molly", "Aurther", "Percy", "Lucius", "Draco", "Crab", "Goyal", "Reeterskeeter", "Dobey",
-        "Katniss", "Peeta", "President Snow"
+        "Katniss", "Peeta", "President Snow",
+		"Jimmy", "Conan", "Racheal", "Detective Moore",
+		"Calvin", "Hobbes", "Susie",
+		"FireStar",
+		"Garfield", "Odie", "John",
+        "Remy", "Linguini", "Colette"
     };
     static int namesLeftCount = names.Length;
     static bool[] pickedNames = new bool[names.Length];

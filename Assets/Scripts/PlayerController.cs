@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
 
     }*/
 
+    [System.Serializable]
     public struct Bloodline
     {
         public string name;
@@ -35,6 +36,8 @@ public class PlayerController : MonoBehaviour
     [System.Serializable]
     public struct DNA
     {
+        public string name;
+
         //public List<float> weights;
         public int memberNum;
         public float[] weights;
@@ -43,7 +46,7 @@ public class PlayerController : MonoBehaviour
         public bool evaluated;
         public int generation;
         public int level;
-        public string name;
+        //public string name;
         public int nameGen;
         public int bloodlineLevel;
         public Color avatarColor;
@@ -71,6 +74,7 @@ public class PlayerController : MonoBehaviour
     public float mutationRate;
     public NeuronLine[] brain;
     public List<DNA> population;
+    public List<Bloodline> bloodlines;
     [Tooltip("For randomly generated weights, what's the range (i.e 10 will result in a range of -10 to 10)?")]
     public float initialDataRange;
     [Tooltip("Should be a number that is divisible by 5.")]
@@ -261,6 +265,7 @@ public class PlayerController : MonoBehaviour
         initialPopulationSize = data.initialPopulationSize;
         generation = data.curGeneration;
         scoreManager.globalHighScore = data.globalHighScore;
+        memberCounter = data.memberCounter;
 
         int popCount = population.Count;
 
@@ -271,6 +276,17 @@ public class PlayerController : MonoBehaviour
         evaluated = new bool[popCount];
         generation = new int[popCount];
         level = new int[popCount];*/
+
+        bloodlines = new List<Bloodline>();
+
+        for (int i = 0; i < data.bloodlineNames.Length; i++)
+        {
+            Bloodline tmp = new Bloodline();
+            tmp.name = data.bloodlineNames[i];
+            tmp.count = data.bloodlineCounts[i];
+            //bloodlineCounts[i] = playerController.bloodlines[i].count;
+            bloodlines.Add(tmp);
+        }
 
         population = new List<DNA>();
 
@@ -338,6 +354,12 @@ public class PlayerController : MonoBehaviour
         res.avatarColor = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
         //res.avatarColor = new Color(Random.Range(0.0f, 255.0f), Random.Range(0.0f, 255.0f), Random.Range(0.0f, 255.0f));
         //Debug.Log("memberCounter = " + memberCounter.ToString());
+
+        //Add entry to bloodlines array.
+        Bloodline newBloodline = new Bloodline();
+        newBloodline.name = res.name;
+        newBloodline.count = 1;
+        bloodlines.Add(newBloodline);
 
         return res;
     }
@@ -431,6 +453,7 @@ public class PlayerController : MonoBehaviour
     {
         //Debug.Log(current.avatarColor);
         GetComponent<Renderer>().material.color = /*new Color(Color.red.r, Color.red.g, Color.red.b, 0.5f);*//*current.avatarColor;*/new Color(current.avatarColor.r, current.avatarColor.g, current.avatarColor.b, /*0.5f*/GetComponent<Renderer>().material.color.a);
+        transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(1 - current.avatarColor.r, 1 - current.avatarColor.g, 1 - current.avatarColor.b, transform.GetChild(0).GetComponent<Renderer>().material.color.a);
         InstallDNAWeights(current);
     }
 
@@ -659,12 +682,29 @@ public class PlayerController : MonoBehaviour
         //is more likely to be the mainInfluence to the child!
         DNA mainParentalInfluence = mainParentalInfluenceOptions[Random.Range(0, mainParentalInfluenceOptions.Length)];
 
-        //Pass on the color, name, nameGen, and bloodlineLevel from the mainParentalInfluence to the newMember.
+        //Pass on the color, name, nameGen (sort of), and bloodlineLevel from the mainParentalInfluence to the newMember.
         newMember.name = mainParentalInfluence.name;
-        newMember.nameGen = mainParentalInfluence.nameGen + 1;
+        newMember.nameGen = GetNextNameGen(newMember.name);
         newMember.bloodlineLevel = mainParentalInfluence.bloodlineLevel + 1;
         newMember.avatarColor = mainParentalInfluence.avatarColor;
 
         return newMember;
+    }
+
+    int GetNextNameGen(string bloodlineName)
+    {
+        int res = 1;
+        for(int i = 0; i < bloodlines.Count; i++)
+        {
+            if(bloodlines[i].name == bloodlineName)
+            {
+                Bloodline tmp = bloodlines[i];
+                res = ++tmp.count;
+                bloodlines[i] = tmp;
+                break;
+            }
+        }
+
+        return res;
     }
 }

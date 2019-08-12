@@ -5,10 +5,17 @@ using UnityEngine;
 [System.Serializable]
 public class GameData
 {
+    //Miscellanious Global Variables.
     public int initialPopulationSize;
     public int curGeneration;
     public float globalHighScore;
+    public int memberCounter;
 
+    //Bloodline struct
+    public string[] bloodlineNames;
+    public int[] bloodlineCounts;
+
+    //Population struct
     public int[] memberNum;
     public float[,] weights;
     public float[] fitness;
@@ -29,8 +36,13 @@ public class GameData
         initialPopulationSize = playerController.initialPopulationSize;
         curGeneration = playerController.generation;
         globalHighScore = scoreManager.globalHighScore;
+        memberCounter = playerController.memberCounter;
 
+        int bloodCount = playerController.bloodlines.Count;
         int popCount = playerController.population.Count;
+
+        bloodlineNames = new string[bloodCount];
+        bloodlineCounts = new int[bloodCount];
 
         memberNum = new int[popCount];
         weights = new float[popCount, playerController.population[0].weights.Length];
@@ -44,6 +56,12 @@ public class GameData
         bloodlineLevel = new int[popCount];
         avatarColor = new float[popCount,3];
         
+        for(int i = 0; i < playerController.bloodlines.Count; i++)
+        {
+            bloodlineNames[i] = playerController.bloodlines[i].name;
+            bloodlineCounts[i] = playerController.bloodlines[i].count;
+        }
+
         for(int i = 0; i < playerController.population.Count; i++)
         {
             memberNum[i] = playerController.population[i].memberNum;

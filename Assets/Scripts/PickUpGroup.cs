@@ -13,10 +13,15 @@ public class PickUpGroup : MonoBehaviour
 
     public Transform playerTransform;
 
+    public Material defaultPickUp, selectedPickUp;
+
+    int prevClosestIndex;
+
     // Start is called before the first frame update
     void Start()
     {
         maxPickUpScore = transform.childCount * pointValue;
+        prevClosestIndex = 0;
     }
 
     // Update is called once per frame
@@ -60,6 +65,10 @@ public class PickUpGroup : MonoBehaviour
         //If no pickups are left...
         if (bestDist == 9999)
             return pointValue;
+
+        transform.GetChild(prevClosestIndex).GetComponent<Renderer>().material = defaultPickUp;
+        transform.GetChild(bestIndex).GetComponent<Renderer>().material = selectedPickUp;
+        prevClosestIndex = bestIndex;
 
         return transform.GetChild(bestIndex).GetComponent<PickUp>().distToPlayer;
     }

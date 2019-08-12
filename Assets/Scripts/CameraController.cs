@@ -28,6 +28,7 @@ public class CameraController : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, cameraDest.position, Time.deltaTime * moveSpeed);
         dummy.position = transform.position;
         dummy.transform.LookAt(cameraSubject);
-        transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, dummy.eulerAngles, Time.deltaTime * rotSpeed);
+        //transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, dummy.eulerAngles, Time.deltaTime * rotSpeed);
+        transform.rotation = Quaternion.Lerp(transform.rotation, dummy.rotation, Time.deltaTime * rotSpeed);
     }
 }

@@ -54,7 +54,7 @@ public class ScoreManager : MonoBehaviour
         memberTime = Time.time - memberStartTime;
         if (pickUpScore >= pickUpGroup.maxPickUpScore)
         {
-            speedCompletionBonus = pickUpGroup.maxPickUpScore / memberTime;
+            speedCompletionBonus = (pickUpGroup.maxPickUpScore / memberTime) * pickUpGroup.pointValue;
         } else
         {
             speedCompletionBonus = 0;
